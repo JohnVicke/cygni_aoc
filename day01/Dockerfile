@@ -1,5 +1,5 @@
-FROM alpine:latest
-COPY . /solution
-WORKDIR /solution
-
-CMD ./solution.sh
+FROM python:3-alpine 
+WORKDIR /app
+COPY *.py ./
+COPY input.txt .
+CMD ["python", "main.py"]
