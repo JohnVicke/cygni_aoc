@@ -16,6 +16,16 @@ const stacks = {
   9: ["F", "C", "Q", "G"],
 };
 
+const printOutput = () =>
+  console.log(
+    Object.entries(stacks)
+      .map((stack) => {
+        const string = stack.join("");
+        return string.charAt(string.length - 1);
+      })
+      .join("")
+  );
+
 const getProcedure = (row: string): Procedure => {
   const parts = row.split(" ");
   return {
@@ -34,13 +44,6 @@ const p1 = async (input: string[]) => {
       stacks[to] = [...stacks[to], crate];
     }
   });
-
-  return Object.entries(stacks)
-    .map((stack) => {
-      const string = stack.join("");
-      return string.charAt(string.length - 1);
-    })
-    .join("");
 };
 
 const p2 = async (input: string[]) => {
@@ -51,17 +54,10 @@ const p2 = async (input: string[]) => {
     stacks[from] = stacks[from].slice(0, stacks[from].length - move);
     stacks[to] = [...stacks[to], ...toBeMoved];
   });
-
-  return Object.entries(stacks)
-    .map((stack) => {
-      const string = stack.join("");
-      return string.charAt(string.length - 1);
-    })
-    .join("");
 };
 
-console.log(
-  await((Deno.env.get("part") || "part1") === "part1" ? p1 : p2)(
-    (await Deno.readTextFile("./input.txt")).split("\n").filter(Boolean)
-  )
+await((Deno.env.get("part") || "part1") === "part1" ? p1 : p2)(
+  (await Deno.readTextFile("./input.txt")).split("\n").filter(Boolean)
 );
+
+printOutput();
