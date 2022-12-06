@@ -1,5 +1,8 @@
-FROM alpine:latest
-COPY . /solution
-WORKDIR /solution
-
-CMD ./solution.sh
+FROM denoland/deno:latest
+WORKDIR /app
+USER deno
+COPY *.ts ./
+COPY input.txt .
+RUN deno cache index.ts
+RUN mkdir -p /var/tmp/log
+CMD ["run", "--allow-all", "index.ts"]
